@@ -36,7 +36,10 @@ void OrderBook::delete_bid_from(int level) {
 }
 
 void OrderBook::delete_bid_thru(int level) {
-    bids_.erase(bids_.begin(), bids_.begin()+level);
+    if(level == 1)
+        bids_.clear();
+    else
+        std::cout << "Error: delete thru expects level = 1";
 }
 
 void OrderBook::add_ask(int level, float price, int quantity) {
@@ -64,7 +67,10 @@ void OrderBook::delete_ask_from(int level) {
 }
 
 void OrderBook::delete_ask_thru(int level) {
-    asks_.erase(asks_.begin(), asks_.begin()+level);
+    if(level == 1)
+        asks_.clear();
+    else
+        std::cout << "Error: delete thru expects level = 1";
 }
 
 std::ostream& operator<<(std::ostream &os, const OrderBook &book) {
@@ -81,7 +87,7 @@ std::ostream& operator<<(std::ostream &os, const OrderBook &book) {
     }
 
     os << "--------------------------------------" << '\n';
-    
+
     for(auto it = book.bids_.begin(); it != book.bids_.end(); ++it) {
         os << it->quantity
            << "\t\t\t"
